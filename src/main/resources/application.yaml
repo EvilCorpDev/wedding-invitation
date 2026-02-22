@@ -1,0 +1,15 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: wedding-invitation
+  datasource:
+    url: jdbc:postgresql://localhost:3000/wedding
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+logging:
+  level:
+    org.springframework.security: INFO
