@@ -5,7 +5,7 @@ import com.tsukor.weddinginvitation.email.props.TemplateRenderer
 import com.tsukor.weddinginvitation.email.template.ConfirmationEmailTemplates
 import com.tsukor.weddinginvitation.repository.ContactConfirmationRepository
 import com.tsukor.weddinginvitation.repository.ContactDetailsRepository
-import com.tsukor.weddinginvitation.web.ConfirmResult
+import com.tsukor.weddinginvitation.enums.ConfirmResult
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper

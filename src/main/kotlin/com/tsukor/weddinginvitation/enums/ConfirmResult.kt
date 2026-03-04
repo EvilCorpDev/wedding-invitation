@@ -1,4 +1,4 @@
-package com.tsukor.weddinginvitation.web
+package com.tsukor.weddinginvitation.enums
 
 enum class ConfirmResult {
     OK,

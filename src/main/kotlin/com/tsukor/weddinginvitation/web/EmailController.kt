@@ -1,5 +1,6 @@
 package com.tsukor.weddinginvitation.web
 
+import com.tsukor.weddinginvitation.enums.ConfirmResult
 import com.tsukor.weddinginvitation.service.EmailService
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
