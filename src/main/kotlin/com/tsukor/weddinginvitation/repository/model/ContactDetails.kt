@@ -9,7 +9,7 @@ data class ContactDetails(
     @Id
     val registrationToken: UUID,
     val phone: String,
-    val phoneConfirmed: Boolean,
+    var phoneConfirmed: Boolean,
     val email: String,
-    val emailConfirmed: Boolean,
+    var emailConfirmed: Boolean,
 ) {}

@@ -24,6 +24,11 @@ spring:
           auth: true
           starttls:
             enable: true
+  cloud:
+    aws:
+      sqs:
+        region: eu-north-1
+
 
 logging:
   level:

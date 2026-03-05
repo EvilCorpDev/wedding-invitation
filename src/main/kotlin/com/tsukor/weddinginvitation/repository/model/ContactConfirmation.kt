@@ -1,6 +1,9 @@
 package com.tsukor.weddinginvitation.repository.model
 
+import com.tsukor.weddinginvitation.enums.ContactType
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import java.time.ZonedDateTime
 import java.util.UUID
@@ -9,6 +12,7 @@ import java.util.UUID
 data class ContactConfirmation(
     @Id
     val registrationToken: UUID,
-    val phoneLinkSent: ZonedDateTime,
-    val emailLinkSent: ZonedDateTime,
+    val linkSent: ZonedDateTime,
+    @Enumerated(EnumType.STRING)
+    val contactType: ContactType,
 ) {}

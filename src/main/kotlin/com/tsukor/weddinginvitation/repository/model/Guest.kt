@@ -11,8 +11,6 @@ data class Guest(
     val registrationToken: UUID,
     val firstName: String,
     val lastName: String,
-    val phone: String,
-    val email: String,
     val terms: Boolean,
     val marketing: Boolean,
     val updated: ZonedDateTime,
