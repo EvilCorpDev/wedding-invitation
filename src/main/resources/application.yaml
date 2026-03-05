@@ -13,7 +13,30 @@ spring:
     properties:
           hibernate:
             default_schema: wedding
+  mail:
+    host: smtp.your-provider.com
+    port: 587
+    username: username
+    password: password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  cloud:
+    aws:
+      sqs:
+        region: eu-north-1
+
 
 logging:
   level:
     org.springframework.security: INFO
+
+app:
+  mail:
+    from: "Wedding <no-reply@wedding.site.com>"
+    domain: "wedding.site.com" #TODO: where should I set it?
+    confirmExpiresIn: "48 hours"
+    confirmExpiresInHours: 48

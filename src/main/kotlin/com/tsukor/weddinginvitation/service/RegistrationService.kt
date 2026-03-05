@@ -5,9 +5,11 @@ import com.tsukor.weddinginvitation.model.EventDetails
 import com.tsukor.weddinginvitation.model.RegistrationCode
 import com.tsukor.weddinginvitation.model.RegistrationDetails
 import com.tsukor.weddinginvitation.model.RegistrationRequest
+import com.tsukor.weddinginvitation.repository.ContactDetailsRepository
 import com.tsukor.weddinginvitation.repository.RegistrationCodeRepository
 import com.tsukor.weddinginvitation.repository.GuestsRepository
 import com.tsukor.weddinginvitation.repository.EventRepository
+import com.tsukor.weddinginvitation.repository.model.ContactDetails
 import com.tsukor.weddinginvitation.repository.model.Guest
 import org.springframework.stereotype.Service
 import java.time.ZonedDateTime
@@ -18,26 +20,37 @@ import java.util.UUID
 class RegistrationService(
     private val guestsRepository: GuestsRepository,
     private val registrationCodeRepository: RegistrationCodeRepository,
+    private val contactDetailsRepository: ContactDetailsRepository,
     private val eventRepository: EventRepository,
     private val isoDateTimeFormatter: DateTimeFormatter,
+    private val sqsService: SqsService
 ) {
 
     fun processRegistrationRequest(request: RegistrationRequest) {
-        registrationCodeRepository.findByEventToken(UUID.fromString(request.registrationToken))
+        val registrationToken = UUID.fromString(request.registrationToken)
+        registrationCodeRepository.findByEventToken(registrationToken)
             ?: throw NotFoundException("Can't find registration token: ${request.registrationToken}")
 
         val guest = Guest(
-            UUID.fromString(request.registrationToken),
+            registrationToken,
             request.guest.firstName,
             request.guest.lastName,
-            request.guest.phone,
-            request.guest.email,
             request.consent.terms,
             request.consent.marketing,
             ZonedDateTime.now(),
         )
-
         guestsRepository.save(guest)
+
+        val contactDetails = ContactDetails(
+            registrationToken,
+            request.guest.phone,
+            false,
+            request.guest.email,
+            false
+        )
+        contactDetailsRepository.save(contactDetails)
+
+        sqsService.queueEmailConfirmation(registrationToken, request.guest.email)
     }
 
     fun processActivationCode(code: RegistrationCode): RegistrationDetails {

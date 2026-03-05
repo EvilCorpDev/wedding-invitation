@@ -2,16 +2,14 @@ package com.tsukor.weddinginvitation.repository.model
 
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
-import java.time.ZonedDateTime
 import java.util.UUID
 
 @Entity
-data class Guest(
+data class ContactDetails(
     @Id
     val registrationToken: UUID,
-    val firstName: String,
-    val lastName: String,
-    val terms: Boolean,
-    val marketing: Boolean,
-    val updated: ZonedDateTime,
+    val phone: String,
+    var phoneConfirmed: Boolean,
+    val email: String,
+    var emailConfirmed: Boolean,
 ) {}
