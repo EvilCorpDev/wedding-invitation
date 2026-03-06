@@ -26,7 +26,7 @@ class SecurityConfig {
                     .requestMatchers("/error").permitAll()
 
                     // SPA entry
-                    .requestMatchers("/", "/index.html", "/confirmed").permitAll()
+                    .requestMatchers("/", "/index.html", "/confirmed/**").permitAll()
 
                     // Vite/React build output (most common)
                     .requestMatchers("/assets/**").permitAll()

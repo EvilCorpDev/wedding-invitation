@@ -44,8 +44,9 @@ CREATE TABLE wedding.contact_details
 
 CREATE TABLE wedding.contact_confirmation
 (
+    id                 UUID        NOT NULL,
     registration_token UUID        NOT NULL,
     link_sent          TIMESTAMP   NOT NULL,
     contact_type       VARCHAR(10) NOT NULL,
-    CONSTRAINT idx_contact_confirmation_primary PRIMARY KEY (registration_token)
+    CONSTRAINT idx_contact_confirmation_primary PRIMARY KEY (id)
 );

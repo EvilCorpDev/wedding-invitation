@@ -50,6 +50,7 @@ class RegistrationService(
         )
         contactDetailsRepository.save(contactDetails)
 
+        sqsService.queuePhoneConfirmation(registrationToken, request.guest.phone)
         sqsService.queueEmailConfirmation(registrationToken, request.guest.email)
     }
 

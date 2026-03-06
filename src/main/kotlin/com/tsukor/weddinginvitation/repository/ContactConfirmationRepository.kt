@@ -10,5 +10,6 @@ import java.util.UUID
 interface ContactConfirmationRepository : CrudRepository<ContactConfirmation, UUID> {
 
     @Query("select cc from ContactConfirmation cc where cc.contactType = :contactType and cc.registrationToken = :token")
-    fun findByEmail(@Param("contactType") contactType: ContactType, @Param("token") token: UUID): ContactConfirmation?
+    fun findByContactType(@Param("contactType") contactType: ContactType, @Param("token") token: UUID): ContactConfirmation?
+
 }
