@@ -1,36 +1,58 @@
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, Link, useParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+
+type ConfirmationType = "email" | "phone";
 
 export default function EmailConfirmationPage() {
     const [params] = useSearchParams();
-    const status = params.get("status");
+    const { type } = useParams();
 
-    let title = "Email confirmation";
+    const status = params.get("status");
+    const confirmationType: ConfirmationType =
+        type === "phone" ? "phone" : "email";
+
+    const label = confirmationType === "phone" ? "phone number" : "email";
+
+    let title = `${label} confirmation`;
     let message = "";
 
     switch (status) {
         case "ok":
-            title = "Email confirmed 🎉";
+            title =
+                confirmationType === "phone"
+                    ? "Phone number confirmed 🎉"
+                    : "Email confirmed 🎉";
             message =
-                "Your email has been successfully confirmed. The couple will be able to send you updates about the wedding.";
+                confirmationType === "phone"
+                    ? "Your phone number has been successfully confirmed. The couple will be able to send you updates about the wedding."
+                    : "Your email has been successfully confirmed. The couple will be able to send you updates about the wedding.";
             break;
 
         case "expired":
             title = "Confirmation link expired";
             message =
-                "This confirmation link has expired. Please request a new confirmation email.";
+                confirmationType === "phone"
+                    ? "This phone confirmation link has expired. Please request a new confirmation link."
+                    : "This email confirmation link has expired. Please request a new confirmation email.";
             break;
 
         case "invalid":
             title = "Invalid confirmation link";
             message =
-                "The confirmation link is invalid. Please try confirming your email again.";
+                confirmationType === "phone"
+                    ? "The phone confirmation link is invalid. Please try confirming your phone number again."
+                    : "The confirmation link is invalid. Please try confirming your email again.";
             break;
 
         case "used":
-            title = "Email already confirmed";
+            title =
+                confirmationType === "phone"
+                    ? "Phone number already confirmed"
+                    : "Email already confirmed";
             message =
-                "This email has already been confirmed. No further action is needed.";
+                confirmationType === "phone"
+                    ? "This phone number has already been confirmed. No further action is needed."
+                    : "This email has already been confirmed. No further action is needed.";
             break;
 
         default:

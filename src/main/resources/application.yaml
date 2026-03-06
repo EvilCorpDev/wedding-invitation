@@ -34,6 +34,13 @@ logging:
   level:
     org.springframework.security: INFO
 
+aws:
+  sms:
+    region: eu-north-1
+    origination-identity: ${AWS_SMS_ORIGINATION_IDENTITY:}
+    configuration-set-name: ${AWS_SMS_CONFIGURATION_SET_NAME:}
+    max-price: ${AWS_SMS_MAX_PRICE:0.20}
+
 app:
   mail:
     from: "Wedding <no-reply@wedding.site.com>"

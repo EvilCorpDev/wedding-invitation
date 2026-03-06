@@ -3,11 +3,13 @@ package com.tsukor.weddinginvitation.service
 import com.tsukor.weddinginvitation.email.props.ConfirmationEmailParams
 import com.tsukor.weddinginvitation.enums.ContactType
 import com.tsukor.weddinginvitation.model.aws.EmailConfirmation
+import com.tsukor.weddinginvitation.model.aws.PhoneConfirmation
 import com.tsukor.weddinginvitation.repository.ContactConfirmationRepository
 import com.tsukor.weddinginvitation.repository.GuestsRepository
 import com.tsukor.weddinginvitation.repository.model.ContactConfirmation
 import io.awspring.cloud.sqs.annotation.SqsListener
 import io.awspring.cloud.sqs.operations.SqsTemplate
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.ZonedDateTime
 import java.util.*
@@ -16,17 +18,24 @@ import java.util.*
 class SqsService(
     private val sqsTemplate: SqsTemplate,
     private val emailService: EmailService,
+    private val smsService: SmsService,
     private val contactConfirmationRepository: ContactConfirmationRepository,
-    private val guestRepository: GuestsRepository
+    private val guestRepository: GuestsRepository,
+    @Value("\${aws.sqs.queue.email.url}") private val sqsEmailUrl: String,
+    @Value("\${aws.sqs.queue.phone.url}") private val sqsPhoneUrl: String,
 ) {
     fun queueEmailConfirmation(token: UUID, email: String) {
-        sqsTemplate.send(EmailConfirmation(token, email))
+        sqsTemplate.send(sqsEmailUrl, EmailConfirmation(token, email))
     }
 
-    @SqsListener("\${aws.sqs.queue.url}")
+    fun queuePhoneConfirmation(token: UUID, phone: String) {
+        sqsTemplate.send(sqsPhoneUrl, PhoneConfirmation(token, phone))
+    }
+
+    @SqsListener("\${aws.sqs.queue.email.url}")
     fun sendEmailVerification(emailConfirmation: EmailConfirmation) {
         val guest = guestRepository.findByRegistrationToken(emailConfirmation.registrationToken) ?: return
-        val confirmUrl = "https://wedding.tsukor.com/api/email/confirm?token=${emailConfirmation.registrationToken}"
+        val confirmUrl = "https://wedding.tsukor.com/api/confirmation/email?token=${emailConfirmation.registrationToken}"
         emailService.sendEmailConfirmation(emailConfirmation.email,
             ConfirmationEmailParams(
                         coupleNames = "Tan4ik & Zakhar",
@@ -41,6 +50,19 @@ class SqsService(
                 registrationToken = emailConfirmation.registrationToken,
                 linkSent = ZonedDateTime.now(),
                 contactType = ContactType.EMAIL
+            )
+        )
+    }
+
+    @SqsListener("\${aws.sqs.queue.phone.url}")
+    fun sendPhoneVerification(phoneConfirmation: PhoneConfirmation) {
+        val confirmUrl = "https://wedding.tsukor.com/api/confirmation/phone?token=${phoneConfirmation.registrationToken}"
+        smsService.sendTransactionalSms(phoneConfirmation.phone, "Please confirm you phone number for wedding registration \n $confirmUrl")
+        contactConfirmationRepository.save(
+            ContactConfirmation(
+                registrationToken = phoneConfirmation.registrationToken,
+                linkSent = ZonedDateTime.now(),
+                contactType = ContactType.PHONE
             )
         )
     }

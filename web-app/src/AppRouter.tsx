@@ -4,12 +4,12 @@ import App from "./App";
 import EmailConfirmationPage from "@/pages/EmailConfirmationPage";
 
 export default function AppRouter() {
-  return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/confirmed" element={<EmailConfirmationPage />} />
-        </Routes>
-      </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<App />} />
+                <Route path="/confirmed/:type" element={<EmailConfirmationPage />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }

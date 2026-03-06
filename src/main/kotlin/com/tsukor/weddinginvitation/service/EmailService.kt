@@ -7,6 +7,7 @@ import com.tsukor.weddinginvitation.repository.ContactConfirmationRepository
 import com.tsukor.weddinginvitation.repository.ContactDetailsRepository
 import com.tsukor.weddinginvitation.enums.ConfirmResult
 import com.tsukor.weddinginvitation.enums.ContactType
+import com.tsukor.weddinginvitation.repository.model.ContactDetails
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
@@ -42,7 +43,7 @@ class EmailService(
         mailSender.send(message)
     }
 
-    fun confirmEmail(token: String): ConfirmResult {
+    fun confirmWithContactType(token: String, contactType: ContactType): ConfirmResult {
         var tokenUuid: UUID?
         try {
             tokenUuid = UUID.fromString(token)
@@ -50,21 +51,37 @@ class EmailService(
             //log("Invalid token format: $token", e)
             return ConfirmResult.INVALID
         }
-        val contactConfirmationStatus = contactConfirmationRepository.findByEmail(ContactType.EMAIL, tokenUuid) ?: return ConfirmResult.INVALID
+        val contactConfirmationStatus = contactConfirmationRepository.findByContactType(contactType, tokenUuid) ?: return ConfirmResult.INVALID
         if (contactConfirmationStatus.linkSent.plusHours(expiresIn) < ZonedDateTime.now()) {
             return ConfirmResult.EXPIRED
         } else {
             val details = contactDetailsRepository.findById(tokenUuid)
             if (details.isPresent) {
                 val contacts = details.get()
-                if (contacts.emailConfirmed) {
-                    return ConfirmResult.ALREADY_USED
+                return when (contactType) {
+                    ContactType.EMAIL -> checkEmailConfirmed(contacts)
+                    ContactType.PHONE -> checkPhoneConfirmed(contacts)
                 }
-                contacts.emailConfirmed = true
-                contactDetailsRepository.save(contacts)
-                return ConfirmResult.OK
             }
             return ConfirmResult.INVALID
         }
+    }
+
+    fun checkEmailConfirmed(contacts: ContactDetails): ConfirmResult {
+        if (contacts.emailConfirmed) {
+            return ConfirmResult.ALREADY_USED
+        }
+        contacts.emailConfirmed = true
+        contactDetailsRepository.save(contacts)
+        return ConfirmResult.OK
+    }
+
+    fun checkPhoneConfirmed(contacts: ContactDetails): ConfirmResult {
+        if (contacts.phoneConfirmed) {
+            return ConfirmResult.ALREADY_USED
+        }
+        contacts.phoneConfirmed = true
+        contactDetailsRepository.save(contacts)
+        return ConfirmResult.OK
     }
 }

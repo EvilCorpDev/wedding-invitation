@@ -11,6 +11,7 @@ import java.util.UUID
 @Entity
 data class ContactConfirmation(
     @Id
+    val id: UUID = UUID.randomUUID(),
     val registrationToken: UUID,
     val linkSent: ZonedDateTime,
     @Enumerated(EnumType.STRING)
