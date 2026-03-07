@@ -22,8 +22,15 @@ For further reference, please consider the following sections:
 * npm run build
 * copy files from web-app/dist into src/main/resources/static
 * gradle bootJar
-* copy file from build/libs to server
-* run java -jar {jarName}.jar
+* copy jar file from build/libs to docker folder and rename to wedding-invitation.jar
+* zip all content of the folder and transfer to the server
+* scp /path-to-docker-folder/docker/application-production.zip username@server-ip:~/compose/weddign/application.zip
+* ssh into the server
+* cd compose
+* build a docker image docker build -t wedding-invitation -f wedding/wedding.dockerfile wedding
+* cd wedding
+* docker compose up -d
+
 
 ### Guides
 

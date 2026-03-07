@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: wedding-postgres
+    environment:
+      POSTGRES_DB: wedding
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    image: wedding-invitation
+    container_name: wedding-app
+    depends_on:
+      - postgres
+    ports:
+      - "8085:8085"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
