@@ -57,6 +57,36 @@ export const I18N: Record<Lang, Record<string, string>> = {
     missingToken: "Missing registration token. Please re-enter your code.",
 
     footer: "Built with ❤️ • Make sure your backend uses HTTPS and stores minimal data.",
+    confirmationEmailOkTitle: "Email confirmed 🎉",
+    confirmationEmailOkMessage:
+        "Your email has been successfully confirmed. The couple will be able to send you updates about the wedding.",
+
+    confirmationPhoneOkTitle: "Phone confirmed 🎉",
+    confirmationPhoneOkMessage:
+        "Your phone number has been successfully confirmed. The couple will be able to send you updates about the wedding.",
+
+    confirmationExpiredTitle: "Confirmation link expired",
+    confirmationEmailExpiredMessage:
+        "This email confirmation link has expired. Please request a new confirmation email.",
+    confirmationPhoneExpiredMessage:
+        "This phone confirmation link has expired. Please request a new confirmation link.",
+
+    confirmationInvalidTitle: "Invalid confirmation link",
+    confirmationEmailInvalidMessage:
+        "The confirmation link is invalid. Please try confirming your email again.",
+    confirmationPhoneInvalidMessage:
+        "The phone confirmation link is invalid. Please try confirming your phone number again.",
+
+    confirmationEmailUsedTitle: "Email already confirmed",
+    confirmationEmailUsedMessage:
+        "This email has already been confirmed. No further action is needed.",
+
+    confirmationPhoneUsedTitle: "Phone already confirmed",
+    confirmationPhoneUsedMessage:
+        "This phone number has already been confirmed. No further action is needed.",
+
+    confirmationUnknown: "Unknown confirmation status.",
+    backToInvitation: "Return to invitation",
   },
   pl: {
     titleFallback: "Zaproszenie ślubne",
@@ -116,6 +146,36 @@ export const I18N: Record<Lang, Record<string, string>> = {
     missingToken: "Brak tokenu rejestracji. Wpisz ponownie kod.",
 
     footer: "Zrobione z ❤️ • Upewnij się, że backend używa HTTPS i przechowuje minimalną ilość danych.",
+    confirmationEmailOkTitle: "E-mail potwierdzony 🎉",
+    confirmationEmailOkMessage:
+        "Twój adres e-mail został pomyślnie potwierdzony. Para młoda będzie mogła wysyłać Ci aktualizacje dotyczące ślubu.",
+
+    confirmationPhoneOkTitle: "Telefon potwierdzony 🎉",
+    confirmationPhoneOkMessage:
+        "Twój numer telefonu został pomyślnie potwierdzony. Para młoda będzie mogła wysyłać Ci aktualizacje dotyczące ślubu.",
+
+    confirmationExpiredTitle: "Link potwierdzający wygasł",
+    confirmationEmailExpiredMessage:
+        "Ten link do potwierdzenia e-maila wygasł. Poproś o wysłanie nowej wiadomości potwierdzającej.",
+    confirmationPhoneExpiredMessage:
+        "Ten link do potwierdzenia telefonu wygasł. Poproś o nowy link potwierdzający.",
+
+    confirmationInvalidTitle: "Nieprawidłowy link potwierdzający",
+    confirmationEmailInvalidMessage:
+        "Link potwierdzający jest nieprawidłowy. Spróbuj ponownie potwierdzić swój adres e-mail.",
+    confirmationPhoneInvalidMessage:
+        "Link do potwierdzenia telefonu jest nieprawidłowy. Spróbuj ponownie potwierdzić swój numer telefonu.",
+
+    confirmationEmailUsedTitle: "E-mail już potwierdzony",
+    confirmationEmailUsedMessage:
+        "Ten adres e-mail został już potwierdzony. Nie musisz nic więcej robić.",
+
+    confirmationPhoneUsedTitle: "Telefon już potwierdzony",
+    confirmationPhoneUsedMessage:
+        "Ten numer telefonu został już potwierdzony. Nie musisz nic więcej robić.",
+
+    confirmationUnknown: "Nieznany status potwierdzenia.",
+    backToInvitation: "Powrót do zaproszenia",
   },
   ua: {
     titleFallback: "Запрошення на весілля",
@@ -174,5 +234,35 @@ export const I18N: Record<Lang, Record<string, string>> = {
     missingToken: "Немає токена реєстрації. Введіть код ще раз.",
 
     footer: "Зроблено з ❤️ • Переконайтеся, що бекенд використовує HTTPS і зберігає мінімум даних.",
+    confirmationEmailOkTitle: "Ел. пошту підтверджено 🎉",
+    confirmationEmailOkMessage:
+        "Вашу електронну пошту успішно підтверджено. Пара зможе надсилати вам оновлення щодо весілля.",
+
+    confirmationPhoneOkTitle: "Телефон підтверджено 🎉",
+    confirmationPhoneOkMessage:
+        "Ваш номер телефону успішно підтверджено. Пара зможе надсилати вам оновлення щодо весілля.",
+
+    confirmationExpiredTitle: "Термін дії посилання закінчився",
+    confirmationEmailExpiredMessage:
+        "Термін дії цього посилання для підтвердження ел. пошти закінчився. Запросіть новий лист підтвердження.",
+    confirmationPhoneExpiredMessage:
+        "Термін дії цього посилання для підтвердження телефону закінчився. Запросіть нове посилання.",
+
+    confirmationInvalidTitle: "Недійсне посилання підтвердження",
+    confirmationEmailInvalidMessage:
+        "Посилання для підтвердження недійсне. Спробуйте ще раз підтвердити свою електронну пошту.",
+    confirmationPhoneInvalidMessage:
+        "Посилання для підтвердження телефону недійсне. Спробуйте ще раз підтвердити свій номер телефону.",
+
+    confirmationEmailUsedTitle: "Ел. пошту вже підтверджено",
+    confirmationEmailUsedMessage:
+        "Цю електронну пошту вже підтверджено. Більше нічого робити не потрібно.",
+
+    confirmationPhoneUsedTitle: "Телефон уже підтверджено",
+    confirmationPhoneUsedMessage:
+        "Цей номер телефону вже підтверджено. Більше нічого робити не потрібно.",
+
+    confirmationUnknown: "Невідомий статус підтвердження.",
+    backToInvitation: "Повернутися до запрошення",
   },
 };
