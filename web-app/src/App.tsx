@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert";
 import { Header } from "@/components/Header";
 import { EventDetailsCard } from "@/components/EventDetailsCard";
+import StickerBackground from "@/components/StickerBackground";
 import { useLocalStorageState } from "@/lib/storage";
 import { apiPost } from "@/lib/api";
 import type { ApiEvent, SubmitResponse, ValidateResponse } from "@/lib/types";
@@ -25,13 +26,13 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
 
   const [registrationToken, setRegistrationToken] = useLocalStorageState<string | null>(
-    "wedding.registrationToken",
-    null
+      "wedding.registrationToken",
+      null
   );
   const [event, setEvent] = useLocalStorageState<ApiEvent | null>("wedding.event", null);
   const [alreadySubmitted, setAlreadySubmitted] = useLocalStorageState<boolean>(
-    "wedding.alreadySubmitted",
-    false
+      "wedding.alreadySubmitted",
+      false
   );
 
   useEffect(() => {
@@ -45,7 +46,9 @@ export default function App() {
     setError(null);
     setBusy(true);
     try {
-      const data = await apiPost<ValidateResponse>("/api/registration/validate", { code: values.code });
+      const data = await apiPost<ValidateResponse>("/api/registration/validate", {
+        code: values.code,
+      });``
 
       if (!data.ok) {
         setError(data.message);
@@ -118,29 +121,38 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen w-full">
-      <div className="mx-auto max-w-2xl px-4 py-10">
-        <Header event={event} lang={lang} setLang={setLang} t={t} />
+      <div className="relative min-h-screen w-full overflow-hidden bg-slate-50">
+        <StickerBackground />
 
-        {error && (
-          <Alert className="mb-4" variant="destructive">
-            <AlertTitle>{t("oops")}</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
+        <div className="relative z-10 mx-auto max-w-2xl px-4 py-10">
+          <Header event={event} lang={lang} setLang={setLang} t={t} />
 
-        {event && <EventDetailsCard event={event} t={t} />}
+          {error && (
+              <Alert className="mb-4" variant="destructive">
+                <AlertTitle>{t("oops")}</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+          )}
 
-        {step === "code" && <CodeStep busy={busy} onValidate={handleValidate} t={t} />}
+          {event && <EventDetailsCard event={event} t={t} />}
 
-        {step === "form" && <GuestFormStep busy={busy} onSubmit={handleSubmit} onReset={resetAll} t={t} />}
+          {step === "code" && <CodeStep busy={busy} onValidate={handleValidate} t={t} />}
 
-        {step === "success" && <SuccessStep onReset={resetAll} t={t} />}
+          {step === "form" && (
+              <GuestFormStep
+                  busy={busy}
+                  onSubmit={handleSubmit}
+                  onReset={resetAll}
+                  t={t}
+              />
+          )}
 
-        <footer className="mt-8 text-center text-xs text-slate-500">
-          <p>{t("footer")}</p>
-        </footer>
+          {step === "success" && <SuccessStep onReset={resetAll} t={t} />}
+
+          <footer className="mt-8 text-center text-xs text-slate-500">
+            <p>{t("footer")}</p>
+          </footer>
+        </div>
       </div>
-    </div>
   );
 }
