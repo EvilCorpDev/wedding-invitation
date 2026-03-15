@@ -33,7 +33,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.springframework:spring-context-support:7.0.5")
     implementation("io.awspring.cloud:spring-cloud-aws-starter-sqs:4.0.0")
-    implementation("software.amazon.awssdk:pinpointsmsvoicev2:2.42.6")
+    implementation("com.twilio.sdk:twilio:11.3.5")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("tools.jackson.module:jackson-module-kotlin")
     compileOnly("org.projectlombok:lombok")

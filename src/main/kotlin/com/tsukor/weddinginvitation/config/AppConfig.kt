@@ -1,6 +1,7 @@
 package com.tsukor.weddinginvitation.config
 
-import com.tsukor.weddinginvitation.model.aws.AwsSmsProperties
+import com.tsukor.weddinginvitation.model.TwilioProperties
+import com.twilio.http.TwilioRestClient
 import io.awspring.cloud.sqs.operations.SqsTemplate
 import io.awspring.cloud.sqs.operations.SqsTemplateOptions
 import io.awspring.cloud.sqs.operations.TemplateAcknowledgementMode
@@ -10,16 +11,12 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.JavaMailSenderImpl
-import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider
-import software.amazon.awssdk.regions.Region
-import software.amazon.awssdk.services.pinpointsmsvoicev2.PinpointSmsVoiceV2Client
 import software.amazon.awssdk.services.sqs.SqsAsyncClient
 import java.time.format.DateTimeFormatter
-import java.util.function.Consumer
 
 
 @Configuration
-@EnableConfigurationProperties(AwsSmsProperties::class)
+@EnableConfigurationProperties(TwilioProperties::class)
 class AppConfig(
     @Value("\${spring.mail.username}") private val emailUsername: String,
     @Value("\${spring.mail.password}") private val emailPassword: String
@@ -51,18 +48,14 @@ class AppConfig(
     fun sqsTemplate(sqsAsyncClient: SqsAsyncClient): SqsTemplate {
         return SqsTemplate.builder()
             .sqsAsyncClient(sqsAsyncClient)
-            .configure(Consumer { options: SqsTemplateOptions ->
-                options
-                    .acknowledgementMode(TemplateAcknowledgementMode.MANUAL)
-            })
+            .configure { options: SqsTemplateOptions ->
+                options.acknowledgementMode(TemplateAcknowledgementMode.MANUAL)
+            }
             .build()
     }
 
     @Bean
-    fun pinpointSmsVoiceV2Client(props: AwsSmsProperties, credentialsProvider: AwsCredentialsProvider): PinpointSmsVoiceV2Client {
-        return PinpointSmsVoiceV2Client.builder()
-            .region(Region.of(props.region))
-            .credentialsProvider(credentialsProvider)
+    fun twilioRestClient(twilioProperties: TwilioProperties): TwilioRestClient =
+        TwilioRestClient.Builder(twilioProperties.accountSid, twilioProperties.authToken)
             .build()
-    }
 }

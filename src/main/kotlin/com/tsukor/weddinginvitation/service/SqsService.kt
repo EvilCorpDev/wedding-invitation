@@ -57,7 +57,7 @@ class SqsService(
     @SqsListener("\${aws.sqs.queue.phone.url}")
     fun sendPhoneVerification(phoneConfirmation: PhoneConfirmation) {
         val confirmUrl = "https://wedding.tsukor.com/api/confirmation/phone?token=${phoneConfirmation.registrationToken}"
-        smsService.sendTransactionalSms(phoneConfirmation.phone, "Please confirm you phone number for wedding registration \n $confirmUrl")
+        smsService.sendSMS(phoneConfirmation.phone, "Please confirm you phone number for wedding registration \n $confirmUrl")
         contactConfirmationRepository.save(
             ContactConfirmation(
                 registrationToken = phoneConfirmation.registrationToken,

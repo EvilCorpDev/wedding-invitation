@@ -5,7 +5,7 @@ spring:
   application:
     name: wedding-invitation
   datasource:
-    url: jdbc:postgresql://localhost:3000/wedding
+    url: jdbc:postgresql://localhost:5432/wedding
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
@@ -28,6 +28,11 @@ spring:
     aws:
       sqs:
         region: eu-north-1
+
+twilio:
+  account-sid: ${TWILIO_ACCOUNT_SID}
+  auth-token: ${TWILIO_AUTH_TOKEN}
+  from: ${TWILIO_FROM_NUMBER}
 
 
 logging:
