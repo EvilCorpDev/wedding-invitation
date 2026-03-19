@@ -15,8 +15,8 @@ CREATE TABLE wedding.guest
     first_name         VARCHAR(100) NOT NULL,
     last_name          VARCHAR(100) NOT NULL,
     terms              BOOLEAN      NOT NULL,
-    marketing          BOOLEAN      NOT NULL,
     updated            TIMESTAMP    NOT NULL,
+    lang               CHAR(2)      NOT NULL,
     CONSTRAINT idx_guest_primary PRIMARY KEY (registration_token)
 );
 

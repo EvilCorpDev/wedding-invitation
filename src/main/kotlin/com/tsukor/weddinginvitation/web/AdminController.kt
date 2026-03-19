@@ -18,6 +18,6 @@ class AdminController(
 
     @GetMapping("/guest")
     fun getGuestDetails(): RegistrationRequest {
-        return RegistrationRequest("", GuestDetails("", "", "", ""), Consent(terms = true, marketing = true))
+        return RegistrationRequest("", GuestDetails("", "", "", ""), Consent(terms = true), "en")
     }
 }

@@ -86,8 +86,8 @@ export default function App() {
         },
         consent: {
           terms: values.consentTerms,
-          marketing: Boolean(values.consentMarketing),
         },
+        lang: lang,
       });
 
       if (!data.ok) {

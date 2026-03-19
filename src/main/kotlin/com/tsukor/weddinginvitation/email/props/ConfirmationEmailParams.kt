@@ -35,4 +35,7 @@ object TemplateRenderer {
 
     fun renderSubject(template: String, p: ConfirmationEmailParams): String =
         template.replace("{{COUPLE_NAMES}}", p.coupleNames)
+
+    fun renderSms(template: String, confirmUrl: String): String =
+        template.replace("{{CONFIRM_URL}}", confirmUrl)
 }

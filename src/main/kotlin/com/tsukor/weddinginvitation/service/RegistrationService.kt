@@ -1,5 +1,6 @@
 package com.tsukor.weddinginvitation.service
 
+import com.tsukor.weddinginvitation.enums.Lang
 import com.tsukor.weddinginvitation.exception.NotFoundException
 import com.tsukor.weddinginvitation.model.EventDetails
 import com.tsukor.weddinginvitation.model.RegistrationCode
@@ -31,13 +32,14 @@ class RegistrationService(
         registrationCodeRepository.findByEventToken(registrationToken)
             ?: throw NotFoundException("Can't find registration token: ${request.registrationToken}")
 
+        val lang = Lang.fromString(request.lang)
         val guest = Guest(
             registrationToken,
             request.guest.firstName,
             request.guest.lastName,
             request.consent.terms,
-            request.consent.marketing,
             ZonedDateTime.now(),
+            lang,
         )
         guestsRepository.save(guest)
 
@@ -50,8 +52,8 @@ class RegistrationService(
         )
         contactDetailsRepository.save(contactDetails)
 
-        sqsService.queuePhoneConfirmation(registrationToken, request.guest.phone)
-        sqsService.queueEmailConfirmation(registrationToken, request.guest.email)
+        sqsService.queuePhoneConfirmation(registrationToken, request.guest.phone, lang)
+        sqsService.queueEmailConfirmation(registrationToken, request.guest.email, lang)
     }
 
     fun processActivationCode(code: RegistrationCode): RegistrationDetails {

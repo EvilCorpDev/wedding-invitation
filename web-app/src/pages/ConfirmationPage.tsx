@@ -6,16 +6,19 @@ import { useMemo } from "react";
 
 export default function ConfirmationPage() {
     const [lang] = useLocalStorageState<Lang>("wedding.lang", "en");
+    const [params] = useSearchParams();
+    const langParam = params.get("lang");
+    const langFromParam = langParam ? (langParam as Lang) : lang;
 
     const t = useMemo(() => {
-        const dict = I18N[lang] || I18N.en;
+        const dict = I18N[langFromParam] || I18N.en;
         return (key: string) => dict[key] ?? key;
-    }, [lang]);
+    }, [langFromParam]);
 
     const { type } = useParams();
-    const [params] = useSearchParams();
 
     const status = params.get("status");
+
     const isPhone = type === "phone";
 
     let title = "";

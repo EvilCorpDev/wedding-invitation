@@ -22,6 +22,5 @@ export const guestSchema = z.object({
     ),
   email: z.string().trim().email("Enter a valid email").max(120, "Too long"),
   consentTerms: z.literal(true, { errorMap: () => ({ message: "You must accept data processing terms" }) }),
-  consentMarketing: z.boolean().optional(),
 });
 export type GuestForm = z.infer<typeof guestSchema>;

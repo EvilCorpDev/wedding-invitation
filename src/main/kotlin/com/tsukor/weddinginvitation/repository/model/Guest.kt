@@ -1,6 +1,9 @@
 package com.tsukor.weddinginvitation.repository.model
 
+import com.tsukor.weddinginvitation.enums.Lang
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import java.time.ZonedDateTime
 import java.util.UUID
@@ -12,6 +15,7 @@ data class Guest(
     val firstName: String,
     val lastName: String,
     val terms: Boolean,
-    val marketing: Boolean,
     val updated: ZonedDateTime,
+    @Enumerated(EnumType.STRING)
+    val lang: Lang,
 ) {}

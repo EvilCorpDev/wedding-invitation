@@ -95,20 +95,6 @@ export function GuestFormStep({
                 )}
               </div>
             </div>
-
-            <div className="flex items-start gap-3">
-              <Checkbox
-                id="consentMarketing"
-                checked={form.watch("consentMarketing")}
-                onCheckedChange={(v) => form.setValue("consentMarketing", Boolean(v))}
-              />
-              <div className="space-y-1">
-                <Label htmlFor="consentMarketing" className="cursor-pointer">
-                  {t("consentMarketing")}
-                </Label>
-                <p className="text-xs text-slate-500">{t("consentMarketingHint")}</p>
-              </div>
-            </div>
           </div>
 
           <div className="flex flex-col gap-2 sm:flex-row">

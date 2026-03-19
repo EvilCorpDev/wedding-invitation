@@ -50,5 +50,4 @@ app:
   mail:
     from: "Wedding <no-reply@wedding.site.com>"
     domain: "wedding.site.com" #TODO: where should I set it?
-    confirmExpiresIn: "48 hours"
     confirmExpiresInHours: 48
