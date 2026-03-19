@@ -5,7 +5,7 @@ enum class Lang {
 
     companion object {
         fun fromString(str: String): Lang {
-            return entries.firstOrNull { it.name.lowercase() == str } ?: EN
+            return entries.firstOrNull { it.name.equals(str, ignoreCase = true) } ?: EN
         }
     }
 }
